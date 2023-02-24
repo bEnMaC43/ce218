@@ -1,12 +1,13 @@
 package game1;
 
+import utilities.ImageManager;
 import utilities.Vector2D;
 
 import static game1.Constants.DT;
 import static game1.Constants.FRAME_HEIGHT;
 import static game1.Constants.FRAME_WIDTH;
-import java.awt.Color;
-import java.awt.Graphics2D;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class BasicAsteroid extends GameObject {
@@ -14,6 +15,7 @@ public class BasicAsteroid extends GameObject {
     public static final double MAX_SPEED = 100;
     public ArrayList<BasicAsteroid> childAsteroids = new ArrayList<>();
     private long startTime;
+//    Image im = ImageManager.loadImage("asteroid1");
 
 
     public BasicAsteroid(double x, double y, Vector2D velocity) {

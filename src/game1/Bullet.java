@@ -13,7 +13,9 @@ public class Bullet extends GameObject{
     {
         super(position,velocity);
         radius = 5;
-        playerFriendly = true;
+        if (position == BasicGame.playerPos)
+            playerFriendly = true;
+        else playerFriendly = false;
     }
 
     @Override

@@ -52,7 +52,7 @@ public abstract class GameObject {
     }
     public void collisionHandling(GameObject other) {
         if (this.getClass() != other.getClass() &&  this.overlap(other) && !collisionsOff && !other.collisionsOff) {
-            if (!this.playerFriendly || !this.playerFriendly ) {
+            if (this.playerFriendly != other.playerFriendly  ) {
                 this.hit();
                 other.hit();
             }

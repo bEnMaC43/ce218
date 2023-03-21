@@ -9,6 +9,7 @@ import static game1.Constants.DELAY;
 public class BasicGame {
     public static final int N_INITIAL_ASTEROIDS = 5;
     public List<GameObject> gameObjects;
+    public static Vector2D playerPos;
     private int score;
     private int lives;
     private int level;
@@ -50,6 +51,7 @@ public class BasicGame {
         playerShip ship = null;
         List<GameObject> dead = new ArrayList<>();
         List<BasicAsteroid> newAsteroids = new ArrayList<>();
+        List<Saucer> saucers = new ArrayList<>();
         for (GameObject a : gameObjects){
             for(GameObject b : gameObjects)
                 a.collisionHandling(b);
@@ -63,10 +65,14 @@ public class BasicGame {
 
             }
 
-            if (object instanceof playerShip){
+            if (object instanceof playerShip)
                 ship = (playerShip) object;
 
-            }
+            if (object instanceof Saucer)
+                saucers.add((Saucer) object);
+
+
+
             if (object instanceof  BasicAsteroid){
                 asteroids++;
                 for(BasicAsteroid childAsteroid : ((BasicAsteroid) object).childAsteroids){
@@ -87,12 +93,14 @@ public class BasicGame {
         for (GameObject object : dead) {
             if (object instanceof BasicAsteroid) {
                 incScore();
-                gameObjects.remove(object);
             }
+
             else if (object instanceof playerShip && lives > 0){
                 loseLife();
                 object.alive=true;
+                continue;
             }
+            gameObjects.remove(object);
 
 
         }
@@ -105,6 +113,15 @@ public class BasicGame {
 
         else if (ship!=null)
             gameObjects.remove(ship.bullet);
+        for (Saucer s : saucers) {
+            if (s!=null && s.bullet != null)
+                gameObjects.add(s.bullet);
+
+            else if (s!=null)
+                gameObjects.remove(s.bullet);
+
+            playerPos = ship.position;
+        }
     }
 
     public void incScore(){score++;}

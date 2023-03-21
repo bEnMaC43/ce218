@@ -49,7 +49,7 @@ public class Saucer extends Ship{
     @Override
     public void mkBullet(){
         super.mkBullet();
-        Random random = new Random();
+//        Random random = new Random();
         bullet.playerFriendly=false;
         bullet.COLOR = Color.red;
 //        bullet.velocity = new Vector2D(random.nextInt(FRAME_WIDTH)+1,random.nextInt(FRAME_HEIGHT)+1).mult(30);

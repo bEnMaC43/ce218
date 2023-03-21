@@ -1,8 +1,6 @@
 package game1;
 import utilities.*;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,8 @@ public class BasicGame {
     private int level;
 
 
-    public BasicGame(BasicShip ship) {
+
+    public BasicGame(playerShip ship) {
         score = 0;
         lives = 4;
         level=1;
@@ -25,11 +24,13 @@ public class BasicGame {
             gameObjects.add(BasicAsteroid.makeRandomAsteroid());
         }
         gameObjects.add(ship);
+        gameObjects.add(new Saucer(new Vector2D(25,25),new Vector2D(),new RotateNShoot()));
+
     }
 
     public static void main(String[] args) throws Exception {
         BasicKeys keyController = new BasicKeys();
-        BasicShip ship = new BasicShip(keyController);
+        playerShip ship = new playerShip(keyController);
         BasicGame game = new BasicGame(ship);
         BasicView view = new BasicView(game);
         new JEasyFrame(view, "Basic Game",keyController);
@@ -46,7 +47,7 @@ public class BasicGame {
     }
 
     public void update() {
-        BasicShip ship = null;
+        playerShip ship = null;
         List<GameObject> dead = new ArrayList<>();
         List<BasicAsteroid> newAsteroids = new ArrayList<>();
         for (GameObject a : gameObjects){
@@ -62,8 +63,8 @@ public class BasicGame {
 
             }
 
-            if (object instanceof BasicShip){
-                ship = (BasicShip) object;
+            if (object instanceof playerShip){
+                ship = (playerShip) object;
 
             }
             if (object instanceof  BasicAsteroid){
@@ -88,7 +89,7 @@ public class BasicGame {
                 incScore();
                 gameObjects.remove(object);
             }
-            else if (object instanceof BasicShip && lives > 0){
+            else if (object instanceof playerShip && lives > 0){
                 loseLife();
                 object.alive=true;
             }

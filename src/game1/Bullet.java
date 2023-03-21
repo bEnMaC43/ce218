@@ -8,7 +8,7 @@ import static game1.Constants.*;
 
 public class Bullet extends GameObject{
 
-
+    public Color COLOR = Color.blue;
     Bullet(Vector2D position, Vector2D velocity)
     {
         super(position,velocity);
@@ -18,7 +18,7 @@ public class Bullet extends GameObject{
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(Color.blue);
+        g.setColor(COLOR);
         g.fillOval((int)position.x,(int)position.y,radius,radius);
 
     }

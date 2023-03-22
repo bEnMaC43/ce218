@@ -3,12 +3,17 @@ package game1;
 import utilities.Vector2D;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.util.Random;
 
 import static game1.Constants.*;
 
 
 public class Saucer extends Ship{
+    public static final int HEIGHT = 12;
+    public static final int WIDTH = 24;
+    public static final int WIDTH_ELLIPSE = 20;
 
     public static final double STEER_RATE = 2 * Math.PI;
     // acceleration when thrust is applied
@@ -42,9 +47,20 @@ public class Saucer extends Ship{
             bullet = null;
     }
     @Override
-    public void draw(Graphics2D g){
-        g.setColor(COLOR);
-        g.fillOval((int) position.x - radius, (int) position.y - radius, 2 * radius, 2 * radius);
+//    public void draw(Graphics2D g){
+//        g.setColor(COLOR);
+//        g.fillOval((int) position.x - radius, (int) position.y - radius, 2 * radius, 2 * radius);
+//    }
+    public void draw(Graphics2D g) {
+        AffineTransform at = g.getTransform();
+        g.translate(position.x, position.y);
+        Ellipse2D ellipse = new Ellipse2D.Double(-WIDTH_ELLIPSE / 2.0,
+                -HEIGHT / 2.0, WIDTH_ELLIPSE, HEIGHT);
+        g.setColor(Color.lightGray);
+        g.fill(ellipse);
+        g.setColor(Color.darkGray);
+        g.drawLine(-WIDTH / 2, 0, WIDTH / 2, 0);
+        g.setTransform(at);
     }
     @Override
     public void hit(){

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static game1.Constants.FRAME_HEIGHT;
 import static game1.Constants.FRAME_WIDTH;
@@ -35,22 +36,27 @@ public class BasicView extends JComponent {
 
     @Override
     public void paintComponent(Graphics g0) {
-            Graphics2D graphics = (Graphics2D) g0;
+        Graphics2D graphics = (Graphics2D) g0;
+        ArrayList<GameObject> aliveObjs = new ArrayList<>();
+        // paint the background
+        graphics.drawImage(im,bgTransf,null);
+        //graphics.fillRect(0, 0, getWidth(), getHeight());
+        for (GameObject object : game.gameObjects) {
+            if (object.alive)
+                aliveObjs.add(object);
+        }
+        for (GameObject object : aliveObjs)
+            object.draw(graphics);
+        graphics.setColor(Color.YELLOW);
+        graphics.setFont(new Font("dialog", Font.BOLD, 20));
+        graphics.drawString("Level: " + game.getLevel(), 20, FRAME_HEIGHT - 20);
+        graphics.drawString("Score: " + game.getScore(), FRAME_WIDTH / 3 + 20, FRAME_HEIGHT - 20);
+        graphics.drawString("Lives: " + game.getLives(), FRAME_WIDTH / 3 + FRAME_WIDTH / 3, FRAME_HEIGHT - 20);
 
-            // paint the background
-            graphics.drawImage(im,bgTransf,null);
-            //graphics.fillRect(0, 0, getWidth(), getHeight());
-            for (GameObject object : game.gameObjects) {
-                if (object.alive)
-                    object.draw(graphics);
-            }
-            graphics.setColor(Color.YELLOW);
-            graphics.setFont(new Font("dialog", Font.BOLD, 20));
-            graphics.drawString("Level: " + game.getLevel(), 20, FRAME_HEIGHT - 20);
-            graphics.drawString("Score: " + game.getScore(), FRAME_WIDTH / 3 + 20, FRAME_HEIGHT - 20);
-            graphics.drawString("Lives: " + game.getLives(), FRAME_WIDTH / 3 + FRAME_WIDTH / 3, FRAME_HEIGHT - 20);
-
-            getJFrame().setResizable(false);
+        getJFrame().setResizable(false);
+        if (game.gameOver){
+            graphics.drawString("GAME OVER!",(FRAME_WIDTH/2)-20,(FRAME_HEIGHT/2)-20);
+        }
     }
 
     @Override

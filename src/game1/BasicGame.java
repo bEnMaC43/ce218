@@ -17,6 +17,8 @@ public class BasicGame {
     private int level;
     private boolean shipShieldOn;
 
+    public static boolean gameOver;
+
 
 
     public BasicGame(playerShip ship)  {
@@ -49,6 +51,7 @@ public class BasicGame {
                 break;
             Thread.sleep(DELAY);
         }
+        gameOver=true;
     }
 
     public void update() {

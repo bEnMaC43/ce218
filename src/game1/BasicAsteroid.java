@@ -29,6 +29,19 @@ public class BasicAsteroid extends GameObject {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        im =  im.getScaledInstance(radius*3,radius*3,Image.SCALE_SMOOTH);
+
+    }
+    public BasicAsteroid(double x, double y, Vector2D velocity,int radius){
+        super(new Vector2D(x,y),velocity);
+        this.startTime = System.currentTimeMillis();
+        try {
+            im = ImageManager.loadImage("asteroid1");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.radius = radius;
+        im =  im.getScaledInstance(this.radius*3,this.radius*3,Image.SCALE_SMOOTH);
 
     }
 
@@ -45,18 +58,17 @@ public class BasicAsteroid extends GameObject {
 
     @Override
     public void draw(Graphics2D g) {
-
-        g.setColor(Color.red);
-        g.fillOval((int) position.x - radius, (int) position.y - radius, 2 * radius, 2 * radius);
+        g.drawImage(im, (int) position.x-radius, (int) position.y-radius,null);
+//        g.setColor(Color.red);
+//        g.fillOval((int) position.x - radius, (int) position.y - radius, 2 * radius, 2 * radius);
     }
     @Override
     public void hit(){
         super.hit();
-        radius /=2;
+        radius/=2;
         if (radius > 4){
-            BasicAsteroid a1 = new BasicAsteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)));
-            BasicAsteroid a2 = new BasicAsteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)));
-            a1.radius = this.radius; a2.radius = this.radius;
+            BasicAsteroid a1 = new BasicAsteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)),radius);
+            BasicAsteroid a2 = new BasicAsteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)),radius);
             childAsteroids.add(a1);
             childAsteroids.add(a2);
         }
@@ -68,6 +80,6 @@ public class BasicAsteroid extends GameObject {
         if ((System.currentTimeMillis() - this.startTime)<2000)
             collisionsOff=true;
         else collisionsOff = false;
-    }
+   }
 
 }

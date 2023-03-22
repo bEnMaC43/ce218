@@ -13,7 +13,7 @@ import java.io.File;
 public class SoundManager {
 
     static int nBullet = 0;
-    static boolean thrusting = false;
+    public static boolean thrusting = false;
 
     // this may need modifying
     final static String path = "sounds/";
@@ -32,6 +32,10 @@ public class SoundManager {
     public final static Clip saucerBig = getClip("saucerBig");
     public final static Clip saucerSmall = getClip("saucerSmall");
     public final static Clip thrust = getClip("thrust");
+    public final static Clip shieldPickup = getClip("shield collect");
+    public final static Clip shieldDrop = getClip("shield drop");
+
+
 
     public final static Clip[] clips = {bangLarge, bangMedium, bangSmall, beat1, beat2,
             extraShip, fire, saucerBig, saucerSmall, thrust};
@@ -58,6 +62,9 @@ public class SoundManager {
         clip.setFramePosition(0);
         clip.start();
     }
+//    public sttaic void playLooped(Clip clip){
+//
+//    }
 
     private static Clip getClip(String filename) {
         Clip clip = null;

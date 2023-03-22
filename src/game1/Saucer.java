@@ -15,6 +15,7 @@ public class Saucer extends Ship{
     public static final double MAG_ACC = 200;
     // constant speed loss factor
     public static final double DRAG = 0.01;
+    public GameObject powerUp;
 
 
     Saucer(Vector2D position, Vector2D velocity, BasicController ctrl) {
@@ -44,19 +45,12 @@ public class Saucer extends Ship{
     public void draw(Graphics2D g){
         g.setColor(COLOR);
         g.fillOval((int) position.x - radius, (int) position.y - radius, 2 * radius, 2 * radius);
-
     }
     @Override
-    public void mkBullet(){
-        super.mkBullet();
-//        Random random = new Random();
-        bullet.playerFriendly=false;
-        bullet.COLOR = Color.red;
-//        bullet.velocity = new Vector2D(random.nextInt(FRAME_WIDTH)+1,random.nextInt(FRAME_HEIGHT)+1).mult(30);
-
-
+    public void hit(){
+        super.hit();
+        powerUp = new Shield(position,new Vector2D(0,0));
     }
-
 
 
 }

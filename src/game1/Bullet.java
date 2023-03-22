@@ -8,14 +8,19 @@ import static game1.Constants.*;
 
 public class Bullet extends GameObject{
 
-    public Color COLOR = Color.blue;
+    public Color COLOR;
     Bullet(Vector2D position, Vector2D velocity)
     {
         super(position,velocity);
         radius = 5;
-        if (position == BasicGame.playerPos)
+        if (overlap(BasicGame.ship)) {
             playerFriendly = true;
-        else playerFriendly = false;
+            COLOR = Color.blue;
+        }
+        else {
+            playerFriendly = false;
+            COLOR = Color.white;
+        }
     }
 
     @Override

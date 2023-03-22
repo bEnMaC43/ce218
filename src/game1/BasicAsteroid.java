@@ -1,6 +1,7 @@
 package game1;
 
 import utilities.ImageManager;
+import utilities.SoundManager;
 import utilities.Vector2D;
 
 import static game1.Constants.DT;
@@ -8,6 +9,8 @@ import static game1.Constants.FRAME_HEIGHT;
 import static game1.Constants.FRAME_WIDTH;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BasicAsteroid extends GameObject {
@@ -15,16 +18,21 @@ public class BasicAsteroid extends GameObject {
     public static final double MAX_SPEED = 100;
     public ArrayList<BasicAsteroid> childAsteroids = new ArrayList<>();
     private long startTime;
-//    Image im = ImageManager.loadImage("asteroid1");
+    Image im;
 
 
     public BasicAsteroid(double x, double y, Vector2D velocity) {
-
         super(new Vector2D(x,y),velocity);
         this.startTime = System.currentTimeMillis();
+        try {
+            im = ImageManager.loadImage("asteroid1");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    public static BasicAsteroid makeRandomAsteroid(){
+    public static BasicAsteroid makeRandomAsteroid()  {
         //Sets the velocity and coordinates for a new random asteroid
         double x = (Math.random() * FRAME_HEIGHT);
         double y = (Math.random() * FRAME_WIDTH);
@@ -32,11 +40,12 @@ public class BasicAsteroid extends GameObject {
         //randomly determines direction of asteroid
         if (Math.random() > 0.5)
             v *=-1;
-        return new BasicAsteroid(x,y,new Vector2D(v,v));
+            return new BasicAsteroid(x, y, new Vector2D(v, v));
     }
 
     @Override
     public void draw(Graphics2D g) {
+
         g.setColor(Color.red);
         g.fillOval((int) position.x - radius, (int) position.y - radius, 2 * radius, 2 * radius);
     }
@@ -51,7 +60,7 @@ public class BasicAsteroid extends GameObject {
             childAsteroids.add(a1);
             childAsteroids.add(a2);
         }
-
+        SoundManager.play(SoundManager.bangSmall);
     }
     @Override
     public void update(){

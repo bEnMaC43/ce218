@@ -11,7 +11,7 @@ public abstract class Ship extends GameObject {
     public Vector2D direction;
     public BasicController ctrl;
     private long timeLastShot;
-    private long cooldownTime = 1000;
+    private long cooldownTime = 500;
 
 
     Ship(Vector2D position, Vector2D velocity,BasicController ctrl) {
@@ -40,6 +40,8 @@ public abstract class Ship extends GameObject {
         super.hit();
         SoundManager.play(SoundManager.bangMedium);
     }
+
+
 
 
 }

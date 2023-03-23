@@ -2,7 +2,7 @@ package game1;
 
 import java.util.Random;
 
-public class RotateNShoot implements BasicController {
+public class MoveNShoot implements BasicController {
     Action action = new Action();
 
     static final int freq = 1;//lower the more frequent

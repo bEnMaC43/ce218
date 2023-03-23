@@ -13,7 +13,7 @@ public class Bullet extends GameObject{
     {
         super(position,velocity);
         radius = 5;
-        if (overlap(BasicGame.ship)) {
+        if (overlap(Game.ship)) {
             playerFriendly = true;
             COLOR = Color.blue;
         }

@@ -1,13 +1,11 @@
 package game1;
 
-import utilities.SoundManager;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class BasicKeys extends KeyAdapter implements BasicController  {
+public class KeyController extends KeyAdapter implements BasicController  {
     Action action;
-    public BasicKeys() {
+    public KeyController() {
         action = new Action();
     }
 

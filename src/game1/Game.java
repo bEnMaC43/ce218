@@ -8,10 +8,10 @@ import java.util.Random;
 
 import static game1.Constants.*;
 
-public class BasicGame {
+public class Game {
     public static final int N_INITIAL_ASTEROIDS = 5;
     public List<GameObject> gameObjects;
-    public static playerShip ship;
+    public static PlayerShip ship;
     private int score;
     private static int lives;
     private int level;
@@ -22,7 +22,7 @@ public class BasicGame {
 
 
 
-    public BasicGame(playerShip ship)  {
+    public Game(PlayerShip ship)  {
         Random random = new Random();
         score = 0;
         lives = 4;
@@ -30,11 +30,11 @@ public class BasicGame {
         shipShieldOn=false;
         gameObjects = new ArrayList<GameObject>();
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
-            gameObjects.add(BasicAsteroid.makeRandomAsteroid());
+            gameObjects.add(Asteroid.makeRandomAsteroid());
         }
         gameObjects.add(ship);
-        gameObjects.add(new Saucer(new Vector2D(random.nextInt(FRAME_WIDTH),random.nextInt(FRAME_HEIGHT)),new Vector2D(),new RotateNShoot()));
-        gameObjects.add(new planet(new Vector2D(random.nextInt(FRAME_WIDTH),random.nextInt(FRAME_HEIGHT))));
+        gameObjects.add(new Saucer(new Vector2D(random.nextInt(FRAME_WIDTH),random.nextInt(FRAME_HEIGHT)),new Vector2D(),new MoveNShoot()));
+        gameObjects.add(new Moon(new Vector2D(random.nextInt(FRAME_WIDTH),random.nextInt(FRAME_HEIGHT))));
         planets++;
 
 
@@ -42,10 +42,10 @@ public class BasicGame {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        BasicKeys keyController = new BasicKeys();
-        ship = new playerShip(keyController);
-        BasicGame game = new BasicGame(ship);
-        BasicView view = new BasicView(game);
+        KeyController keyController = new KeyController();
+        ship = new PlayerShip(keyController);
+        Game game = new Game(ship);
+        GameView view = new GameView(game);
         new JEasyFrame(view, "Basic Game",keyController);
         while (true) {
             game.update();
@@ -60,7 +60,7 @@ public class BasicGame {
 
     public void update() {
         List<GameObject> dead = new ArrayList<>();
-        List<BasicAsteroid> newAsteroids = new ArrayList<>();
+        List<Asteroid> newAsteroids = new ArrayList<>();
         List<Saucer> saucers = new ArrayList<>();
         List<GameObject> powerUps = new ArrayList<>();
         ArrayList<GameObject> nukedItems = new ArrayList<>();
@@ -78,8 +78,8 @@ public class BasicGame {
 
             }
 
-            if (object instanceof playerShip)
-                ship = (playerShip) object;
+            if (object instanceof PlayerShip)
+                ship = (PlayerShip) object;
 
             if (object instanceof Saucer) {
                 saucers.add((Saucer) object);
@@ -90,9 +90,9 @@ public class BasicGame {
 
 
 
-            if (object instanceof  BasicAsteroid){
+            if (object instanceof Asteroid){
                 enemies++;
-                for(BasicAsteroid childAsteroid : ((BasicAsteroid) object).childAsteroids){
+                for(Asteroid childAsteroid : ((Asteroid) object).childAsteroids){
                     newAsteroids.add(childAsteroid);
                 }
 
@@ -104,17 +104,17 @@ public class BasicGame {
             incLevel();
             gameObjects = new ArrayList<>();
             for (int i = 0; i < N_INITIAL_ASTEROIDS*getLevel(); i++) {
-                gameObjects.add(BasicAsteroid.makeRandomAsteroid());
+                gameObjects.add(Asteroid.makeRandomAsteroid());
             }
             for (int i = 0; i < getLevel(); i++) {
-                gameObjects.add(new Saucer(new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT)), new Vector2D(), new RotateNShoot()));
+                gameObjects.add(new Saucer(new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT)), new Vector2D(), new MoveNShoot()));
                 if (i % 2 ==0 )
-                    gameObjects.add(new tankSaucer(new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT)), new Vector2D(), new RotateNShoot()));
+                    gameObjects.add(new TankSaucer(new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT)), new Vector2D(), new MoveNShoot()));
 
                 planets = 0;
                 if ((i) % 2 == 0){
                     planets++;
-                    gameObjects.add(new planet(new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT))));
+                    gameObjects.add(new Moon(new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT))));
                 }
             }
 
@@ -123,13 +123,13 @@ public class BasicGame {
         }
 
         for (GameObject object : dead) {
-            if (object instanceof BasicAsteroid) {
+            if (object instanceof Asteroid) {
                 incScore();
-                if (((BasicAsteroid) object).droppable!=null)
-                    gameObjects.add(((BasicAsteroid) object).droppable);
+                if (((Asteroid) object).droppable!=null)
+                    gameObjects.add(((Asteroid) object).droppable);
             }
 
-            else if (object instanceof playerShip && lives > 0){
+            else if (object instanceof PlayerShip && lives > 0){
                 loseLife();
                 object.alive=true;
                 continue;
@@ -138,7 +138,7 @@ public class BasicGame {
                 for (GameObject o : gameObjects)
                 {
                     SoundManager.play(SoundManager.nuke);
-                    if (!(o instanceof playerShip) )
+                    if (!(o instanceof PlayerShip) )
                         nukedItems.add(o);
                 }
             }
@@ -151,7 +151,7 @@ public class BasicGame {
 
 
         }
-        for (BasicAsteroid a : newAsteroids){
+        for (Asteroid a : newAsteroids){
             gameObjects.add(a);
         }
         for (GameObject powerUp : powerUps)
@@ -180,7 +180,7 @@ public class BasicGame {
             shipShieldOn=false;
         }
         if (random.nextInt(0,1000)==1)
-            gameObjects.add(new machineGun(new Vector2D(random.nextInt(0,FRAME_WIDTH),random.nextInt(0,FRAME_HEIGHT)),new Vector2D()));
+            gameObjects.add(new MachineGun(new Vector2D(random.nextInt(0,FRAME_WIDTH),random.nextInt(0,FRAME_HEIGHT)),new Vector2D()));
     }
 
     public void incScore(){score++;}

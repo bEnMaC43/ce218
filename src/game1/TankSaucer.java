@@ -4,11 +4,11 @@ import utilities.Vector2D;
 
 import java.awt.*;
 
-public class tankSaucer extends Saucer{
+public class TankSaucer extends Saucer{
     int lives;
     long timeSinceLastHit;
 
-    tankSaucer(Vector2D position, Vector2D velocity, BasicController ctrl) {
+    TankSaucer(Vector2D position, Vector2D velocity, BasicController ctrl) {
         super(position, velocity, ctrl);
         COLOR = Color.blue;
         beltColor = Color.yellow;

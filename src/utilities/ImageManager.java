@@ -11,8 +11,8 @@ import javax.imageio.ImageIO;
 
 public class ImageManager {
 
-    // this may need modifying
-    public final static String path = "images/";
+    static File currentDir = new File("images/");
+    public final static String path = currentDir.getAbsolutePath()+"/";
     public final static String ext = ".png";
 
     public static Map<String, Image> images = new HashMap<String, Image>();

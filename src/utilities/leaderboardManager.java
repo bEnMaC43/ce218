@@ -1,16 +1,16 @@
 package utilities;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class leaderboardManager {
+    static File currentDir = new File("textFiles/");
+    public final static String path = currentDir.getAbsolutePath()+"\\";
     private static final String FILENAME = "leaderboard.txt";
     public static void addToFile(String content) {
-        try (FileWriter fw = new FileWriter(FILENAME, true)) {
+        System.out.println(path + FILENAME);
+        try (FileWriter fw = new FileWriter(path + FILENAME, true)) {
             fw.write(content);
             fw.write(System.lineSeparator());
             fw.flush();
@@ -21,7 +21,7 @@ public class leaderboardManager {
     public static String[] getLines() {
         List<Integer> lines = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path + FILENAME))) {
             String line;
             while ((line = br.readLine()) != null) {
                 lines.add(Integer.parseInt(line));

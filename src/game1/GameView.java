@@ -7,21 +7,20 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 import static game1.Constants.FRAME_HEIGHT;
 import static game1.Constants.FRAME_WIDTH;
 
-public class BasicView extends JComponent {
+public class GameView extends JComponent {
     // background colour
     public static final Color BG_COLOR = Color.black;
 
-    private BasicGame game;
+    private Game game;
 
     Image im = ImageManager.loadImage("milkyway1");
     AffineTransform bgTransf;
 
-    public BasicView(BasicGame game) throws IOException {
+    public GameView(Game game) throws IOException {
 
         this.game = game;
         double imWidth = im.getWidth(null);

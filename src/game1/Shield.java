@@ -4,7 +4,7 @@ import utilities.Vector2D;
 
 import java.awt.*;
 
-public class Shield extends interactable{
+public class Shield extends Interactable {
 
     Shield(Vector2D position, Vector2D velocity) {
         super(position, velocity);

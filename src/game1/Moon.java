@@ -5,15 +5,10 @@ import utilities.Vector2D;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Random;
-import java.util.Scanner;
 
-import static game1.Constants.FRAME_HEIGHT;
-import static game1.Constants.FRAME_WIDTH;
+public class Moon extends GameObject{
 
-public class planet extends GameObject{
-
-    planet(Vector2D position) {
+    Moon(Vector2D position) {
         super(position, new Vector2D(0,0));
         radius = 15;
         try {

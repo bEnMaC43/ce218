@@ -4,26 +4,24 @@ import utilities.ImageManager;
 import utilities.SoundManager;
 import utilities.Vector2D;
 
-import static game1.Constants.DT;
 import static game1.Constants.FRAME_HEIGHT;
 import static game1.Constants.FRAME_WIDTH;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BasicAsteroid extends GameObject {
+public class Asteroid extends GameObject {
 
     public static final double MAX_SPEED = 100;
-    public ArrayList<BasicAsteroid> childAsteroids = new ArrayList<>();
+    public ArrayList<Asteroid> childAsteroids = new ArrayList<>();
     private long startTime;
     Image im;
     Nuke droppable = null;
 
 
-    public BasicAsteroid(double x, double y, Vector2D velocity) {
+    public Asteroid(double x, double y, Vector2D velocity) {
         super(new Vector2D(x,y),velocity);
         this.startTime = System.currentTimeMillis();
         try {
@@ -34,7 +32,7 @@ public class BasicAsteroid extends GameObject {
         im =  im.getScaledInstance(radius*3,radius*3,Image.SCALE_SMOOTH);
 
     }
-    public BasicAsteroid(double x, double y, Vector2D velocity,int radius){
+    public Asteroid(double x, double y, Vector2D velocity, int radius){
         super(new Vector2D(x,y),velocity);
         this.startTime = System.currentTimeMillis();
         try {
@@ -47,7 +45,7 @@ public class BasicAsteroid extends GameObject {
 
     }
 
-    public static BasicAsteroid makeRandomAsteroid()  {
+    public static Asteroid makeRandomAsteroid()  {
         //Sets the velocity and coordinates for a new random asteroid
         double x = (Math.random() * FRAME_HEIGHT);
         double y = (Math.random() * FRAME_WIDTH);
@@ -55,7 +53,7 @@ public class BasicAsteroid extends GameObject {
         //randomly determines direction of asteroid
         if (Math.random() > 0.5)
             v *=-1;
-            return new BasicAsteroid(x, y, new Vector2D(v, v));
+            return new Asteroid(x, y, new Vector2D(v, v));
     }
 
     @Override
@@ -69,8 +67,8 @@ public class BasicAsteroid extends GameObject {
         super.hit();
         radius/=2;
         if (radius > 4){
-            BasicAsteroid a1 = new BasicAsteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)),radius);
-            BasicAsteroid a2 = new BasicAsteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)),radius);
+            Asteroid a1 = new Asteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)),radius);
+            Asteroid a2 = new Asteroid(position.x,position.y,new Vector2D((Math.random() * MAX_SPEED),(Math.random() * MAX_SPEED)),radius);
             childAsteroids.add(a1);
             childAsteroids.add(a2);
         }

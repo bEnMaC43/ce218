@@ -15,8 +15,8 @@ public class SoundManager {
     static int nBullet = 0;
     public static boolean thrusting = false;
 
-    // this may need modifying
-    final static String path = "sounds/";
+    static File currentDir = new File("sounds/");
+    public final static String path = currentDir.getAbsolutePath()+"/";
 
     // note: having too many clips open may cause
     // "LineUnavailableException: No Free Voices"

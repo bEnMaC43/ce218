@@ -8,7 +8,7 @@ import java.awt.geom.AffineTransform;
 
 import static game1.Constants.*;
 
-public class playerShip extends Ship {
+public class PlayerShip extends Ship {
     //constants
     // rotation velocity in radians per second
     public static final double STEER_RATE = 2 * Math.PI;
@@ -21,7 +21,7 @@ public class playerShip extends Ship {
     public  static final int XPTHRUST[] = {-5, 0, 5, 0}, YPTHRUST[] = {7, 3, 7, -7};
     private long machineGunExpTime;
 
-    public playerShip(BasicController ctrl) {
+    public PlayerShip(BasicController ctrl) {
         super(new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2),new Vector2D(),ctrl);
         playerFriendly = true;
         COLOR = Color.CYAN;
@@ -77,7 +77,7 @@ public class playerShip extends Ship {
                 shieleded = true;
                 COLOR = Color.green;
             }
-            else if (other instanceof machineGun) {
+            else if (other instanceof MachineGun) {
                 cooldownTime/=2;
                 machineGunExpTime+= 10000;
             }

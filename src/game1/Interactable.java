@@ -8,10 +8,10 @@ import java.util.Random;
 import static game1.Constants.FRAME_HEIGHT;
 import static game1.Constants.FRAME_WIDTH;
 
-public class interactable extends  GameObject{
+public class Interactable extends  GameObject{
     public Color COLOR;
     private long startTime;
-    interactable(Vector2D position, Vector2D velocity) {
+    Interactable(Vector2D position, Vector2D velocity) {
         super(position, velocity);
         playerFriendly = false;
         isInteractable = true;
@@ -28,14 +28,14 @@ public class interactable extends  GameObject{
     public void collisionHandling(GameObject other){
         Random random = new Random();
         if (this.getClass() != other.getClass() &&  this.overlap(other) && !collisionsOff && !other.collisionsOff) {
-            if (other instanceof playerShip)
+            if (other instanceof PlayerShip)
                 this.hit();
 
             else if (this.playerFriendly != other.playerFriendly && !(other instanceof Bullet) ) {
                 this.hit();
                 other.hit();
             }
-            else if (other instanceof planet)
+            else if (other instanceof Moon)
                 position=new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT));
         }
     }

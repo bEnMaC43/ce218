@@ -65,11 +65,11 @@ public class playerShip extends Ship {
     @Override
     public void collisionHandling(GameObject other){
         if (this.getClass() != other.getClass() &&  this.overlap(other) && !collisionsOff && !other.collisionsOff) {
-            if (this.playerFriendly != other.playerFriendly && !(other instanceof Shield) ) {
+            if (this.playerFriendly != other.playerFriendly && !(other.isInteractable) ) {
                 this.hit();
                 other.hit();
             }
-            if (other instanceof Shield) {
+            if (other.isInteractable) {
                 other.hit();
                 shieleded=true;
                 COLOR=Color.green;

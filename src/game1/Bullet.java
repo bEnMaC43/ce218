@@ -38,4 +38,13 @@ public class Bullet extends GameObject{
             hit();
 
     }
+    @Override
+    public void collisionHandling(GameObject other){
+        if (this.getClass() != other.getClass() &&  this.overlap(other) && !collisionsOff && !other.collisionsOff) {
+            if (this.playerFriendly != other.playerFriendly && !(other.isInteractable) ) {
+                this.hit();
+                other.hit();
+            }
+        }
+    }
 }

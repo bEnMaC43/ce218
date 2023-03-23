@@ -12,6 +12,7 @@ public abstract class GameObject {
     public Boolean alive;
     public Boolean playerFriendly;
     public Boolean collisionsOff;
+    public boolean isInteractable;
     GameObject(Vector2D position, Vector2D velocity){
         this.position = position;
         this.velocity = velocity;

@@ -52,6 +52,7 @@ public class BasicGame {
             Thread.sleep(DELAY);
         }
         gameOver=true;
+        leaderboardManager.addToFile(Integer.toString(game.getScore()));
     }
 
     public void update() {
@@ -59,6 +60,7 @@ public class BasicGame {
         List<BasicAsteroid> newAsteroids = new ArrayList<>();
         List<Saucer> saucers = new ArrayList<>();
         List<GameObject> powerUps = new ArrayList<>();
+        ArrayList<GameObject> nukedItems = new ArrayList<>();
         Random random = new Random();
         for (GameObject a : gameObjects){
             for(GameObject b : gameObjects)
@@ -110,6 +112,8 @@ public class BasicGame {
         for (GameObject object : dead) {
             if (object instanceof BasicAsteroid) {
                 incScore();
+                if (((BasicAsteroid) object).droppable!=null)
+                    gameObjects.add(((BasicAsteroid) object).droppable);
             }
 
             else if (object instanceof playerShip && lives > 0){
@@ -117,6 +121,19 @@ public class BasicGame {
                 object.alive=true;
                 continue;
             }
+            else if (object instanceof  Nuke){
+                for (GameObject o : gameObjects)
+                {
+                    SoundManager.play(SoundManager.nuke);
+                    if (!(o instanceof playerShip) )
+                        nukedItems.add(o);
+                }
+            }
+            for (GameObject item : nukedItems) {
+                gameObjects.remove(item);
+                incScore();
+            }
+
             gameObjects.remove(object);
 
 

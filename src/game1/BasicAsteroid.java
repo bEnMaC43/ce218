@@ -12,6 +12,7 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BasicAsteroid extends GameObject {
 
@@ -19,6 +20,7 @@ public class BasicAsteroid extends GameObject {
     public ArrayList<BasicAsteroid> childAsteroids = new ArrayList<>();
     private long startTime;
     Image im;
+    Nuke droppable = null;
 
 
     public BasicAsteroid(double x, double y, Vector2D velocity) {
@@ -73,6 +75,10 @@ public class BasicAsteroid extends GameObject {
             childAsteroids.add(a2);
         }
         SoundManager.play(SoundManager.bangSmall);
+        Random random = new Random();
+        if (random.nextInt(0,30)==1)
+            droppable = new Nuke(position,new Vector2D(0,0));
+
     }
     @Override
     public void update(){

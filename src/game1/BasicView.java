@@ -1,11 +1,13 @@
 package game1;
 import utilities.ImageManager;
+import utilities.leaderboardManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import static game1.Constants.FRAME_HEIGHT;
 import static game1.Constants.FRAME_WIDTH;
@@ -45,6 +47,8 @@ public class BasicView extends JComponent {
             if (object.alive)
                 aliveObjs.add(object);
         }
+
+
         for (GameObject object : aliveObjs)
             object.draw(graphics);
         graphics.setColor(Color.YELLOW);
@@ -55,7 +59,17 @@ public class BasicView extends JComponent {
 
         getJFrame().setResizable(false);
         if (game.gameOver){
-            graphics.drawString("GAME OVER!",(FRAME_WIDTH/2)-20,(FRAME_HEIGHT/2)-20);
+            int lineSpacing = 20;
+            graphics.drawString("GAME OVER!",(FRAME_WIDTH/2)-20,(FRAME_HEIGHT/2)-lineSpacing*2);
+            graphics.drawString("Best Scores:",(FRAME_WIDTH / 2) - 20,(FRAME_HEIGHT/2)-lineSpacing);
+            int count =0;
+            for(String score : leaderboardManager.getLines()) {
+                if (count > 9)
+                    break;
+                lineSpacing-=20;
+                graphics.drawString(score, (FRAME_WIDTH / 2) - 20,(FRAME_HEIGHT/2)-lineSpacing);
+                count++;
+            }
         }
     }
 

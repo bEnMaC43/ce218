@@ -34,7 +34,7 @@ public class SoundManager {
     public final static Clip thrust = getClip("thrust");
     public final static Clip shieldPickup = getClip("shield collect");
     public final static Clip shieldDrop = getClip("shield drop");
-
+    public final static Clip nuke = getClip("nuke");
 
 
     public final static Clip[] clips = {bangLarge, bangMedium, bangSmall, beat1, beat2,

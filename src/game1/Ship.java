@@ -11,7 +11,7 @@ public abstract class Ship extends GameObject {
     public Vector2D direction;
     public BasicController ctrl;
     private long timeLastShot;
-    private long cooldownTime = 500;
+    public long cooldownTime = 500;
 
 
     Ship(Vector2D position, Vector2D velocity,BasicController ctrl) {

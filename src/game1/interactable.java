@@ -3,6 +3,10 @@ package game1;
 import utilities.Vector2D;
 
 import java.awt.*;
+import java.util.Random;
+
+import static game1.Constants.FRAME_HEIGHT;
+import static game1.Constants.FRAME_WIDTH;
 
 public class interactable extends  GameObject{
     public Color COLOR;
@@ -22,6 +26,7 @@ public class interactable extends  GameObject{
     }
     @Override
     public void collisionHandling(GameObject other){
+        Random random = new Random();
         if (this.getClass() != other.getClass() &&  this.overlap(other) && !collisionsOff && !other.collisionsOff) {
             if (other instanceof playerShip)
                 this.hit();
@@ -30,6 +35,8 @@ public class interactable extends  GameObject{
                 this.hit();
                 other.hit();
             }
+            else if (other instanceof planet)
+                position=new Vector2D(random.nextInt(FRAME_WIDTH), random.nextInt(FRAME_HEIGHT));
         }
     }
     @Override

@@ -43,9 +43,13 @@ public class BasicView extends JComponent {
         // paint the background
         graphics.drawImage(im,bgTransf,null);
         //graphics.fillRect(0, 0, getWidth(), getHeight());
-        for (GameObject object : game.gameObjects) {
-            if (object.alive)
-                aliveObjs.add(object);
+        try {
+            for (GameObject object : game.gameObjects) {
+                if (object.alive)
+                    aliveObjs.add(object);
+            }
+        } catch (Exception e) {
+
         }
 
 

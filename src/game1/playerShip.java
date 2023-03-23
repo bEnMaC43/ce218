@@ -19,7 +19,7 @@ public class playerShip extends Ship {
     public boolean shieleded;
     public static final int XP[] = {-6, 0, 6, 0}, YP[] = {8, 4, 8, -8};
     public  static final int XPTHRUST[] = {-5, 0, 5, 0}, YPTHRUST[] = {7, 3, 7, -7};
-
+    private long machineGunExpTime;
 
     public playerShip(BasicController ctrl) {
         super(new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2),new Vector2D(),ctrl);
@@ -47,6 +47,10 @@ public class playerShip extends Ship {
             SoundManager.startThrust();
         else if (ctrl.action().thrust==0)
             SoundManager.stopThrust();
+        if (machineGunExpTime < System.currentTimeMillis()) {
+            machineGunExpTime = System.currentTimeMillis();
+            cooldownTime=500;
+        }
     }
     @Override
     public void draw(Graphics2D g) {
@@ -65,15 +69,17 @@ public class playerShip extends Ship {
     @Override
     public void collisionHandling(GameObject other){
         if (this.getClass() != other.getClass() &&  this.overlap(other) && !collisionsOff && !other.collisionsOff) {
-            if (this.playerFriendly != other.playerFriendly && !(other.isInteractable) ) {
+            if (this.playerFriendly != other.playerFriendly && !(other.isInteractable)) {
                 this.hit();
                 other.hit();
-            }
-            if (other.isInteractable) {
+            } else if (other instanceof Shield) {
                 other.hit();
-                shieleded=true;
-                COLOR=Color.green;
-
+                shieleded = true;
+                COLOR = Color.green;
+            }
+            else if (other instanceof machineGun) {
+                cooldownTime/=2;
+                machineGunExpTime+= 10000;
             }
         }
     }

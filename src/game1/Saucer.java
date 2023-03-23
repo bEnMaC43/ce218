@@ -17,16 +17,18 @@ public class Saucer extends Ship{
 
     public static final double STEER_RATE = 2 * Math.PI;
     // acceleration when thrust is applied
-    public static final double MAG_ACC = 200;
+    public double MAG_ACC = 200;
     // constant speed loss factor
     public static final double DRAG = 0.01;
     public GameObject powerUp;
+    Color beltColor;
 
 
     Saucer(Vector2D position, Vector2D velocity, BasicController ctrl) {
         super(position, velocity, ctrl);
         playerFriendly=false;
-        COLOR = Color.gray;
+        COLOR = Color.lightGray;
+        beltColor = Color.DARK_GRAY;
 //        Random random = new Random();
 //        direction = new Vector2D(random.nextInt(FRAME_WIDTH)+1,random.nextInt(FRAME_HEIGHT)+1);
     }
@@ -56,9 +58,9 @@ public class Saucer extends Ship{
         g.translate(position.x, position.y);
         Ellipse2D ellipse = new Ellipse2D.Double(-WIDTH_ELLIPSE / 2.0,
                 -HEIGHT / 2.0, WIDTH_ELLIPSE, HEIGHT);
-        g.setColor(Color.lightGray);
+        g.setColor(COLOR);
         g.fill(ellipse);
-        g.setColor(Color.darkGray);
+        g.setColor(beltColor);
         g.drawLine(-WIDTH / 2, 0, WIDTH / 2, 0);
         g.setTransform(at);
     }
